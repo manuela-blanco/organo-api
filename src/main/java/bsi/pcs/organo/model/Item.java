@@ -1,4 +1,4 @@
-package bsi.pcs.organo.entity;
+package bsi.pcs.organo.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,32 +9,35 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @Entity
 @Table(name = "item")
 @JsonInclude(Include.NON_NULL)
-public class ItemEntity {
+public class Item {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "item_id")
 	private Long id;
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "produto_id")
-	private ProdutoEntity produto;
+	private Produto produto;
 	private int quantidade;
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "pedido_id")
-	private PedidoEntity pedido;
-	public ItemEntity() {}
+	private Pedido pedido;
+	public Item() {}
 
-	public ProdutoEntity getProduto() {
+	public Produto getProduto() {
 		return produto;
 	}
 
-	public void setProduto(ProdutoEntity produto) {
+	public void setProduto(Produto produto) {
 		this.produto = produto;
 	}
 
@@ -46,11 +49,11 @@ public class ItemEntity {
 		this.quantidade = quantidade;
 	}
 	
-	public PedidoEntity getPedido() {
+	public Pedido getPedido() {
 		return null;
 	}
 
-	public void setPedido(PedidoEntity pedido) {
+	public void setPedido(Pedido pedido) {
 		this.pedido = pedido;
 	}
 }

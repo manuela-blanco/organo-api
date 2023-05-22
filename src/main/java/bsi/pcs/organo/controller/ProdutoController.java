@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import bsi.pcs.organo.entity.FornecedorEntity;
-import bsi.pcs.organo.entity.ProdutoEntity;
+import bsi.pcs.organo.model.Fornecedor;
+import bsi.pcs.organo.model.Produto;
 import bsi.pcs.organo.service.FornecedorService;
 import bsi.pcs.organo.service.ProdutoService;
 
@@ -29,10 +29,10 @@ public class ProdutoController {
 	private FornecedorService fornecedorService;
 
 	@PostMapping("/cadastrar")
-	public ResponseEntity<?> create(@RequestBody(required = true) ProdutoEntity produto,
+	public ResponseEntity<?> create(@RequestBody(required = true) Produto produto,
 									@PathVariable(required = true) String cnpjFornecedor) {
 		
-		FornecedorEntity fornecedorEncontrado = this.fornecedorService.retornar(cnpjFornecedor);
+		Fornecedor fornecedorEncontrado = this.fornecedorService.retornar(cnpjFornecedor);
 		produto.setFornecedor(fornecedorEncontrado);
 		
 		if(this.produtoService.retornar(produto.getFornecedor().getCnpj(), produto.getNome()) != null) {
@@ -45,7 +45,7 @@ public class ProdutoController {
 	}
 	
 	@PutMapping("/atualizar")
-	public ResponseEntity<?> update(@RequestBody(required = true) ProdutoEntity produto) {
+	public ResponseEntity<?> update(@RequestBody(required = true) Produto produto) {
 		
 		if(this.produtoService.retornar(produto.getFornecedor().getCnpj(), produto.getNome()) == null) {
 			return ResponseEntity.badRequest().body("Produto informado não existe");
@@ -58,7 +58,7 @@ public class ProdutoController {
 	@GetMapping("/{produtoId}")
 	public ResponseEntity<?> getProduto(@PathVariable(required = true) Long produtoId) {
 	
-		ProdutoEntity produto = this.produtoService.retornarById(produtoId);
+		Produto produto = this.produtoService.retornarById(produtoId);
 		if(produto == null) return ResponseEntity.badRequest().body("Os dados informados não estão associados a nenhum produto.");
 		
 		return ResponseEntity.status(HttpStatus.OK).body(produto);
@@ -66,7 +66,7 @@ public class ProdutoController {
 	
 	@DeleteMapping("/deletar/{produtoId}")
 	public ResponseEntity<?> deleteProduto(@PathVariable(required = true) Long produtoId) {
-		ProdutoEntity produto = this.produtoService.retornarById(produtoId);
+		Produto produto = this.produtoService.retornarById(produtoId);
 		if(produto == null) return ResponseEntity.badRequest().body("Os id informado não estão associados a nenhum produto.");
 		
 		this.produtoService.deletarProduto(produtoId);

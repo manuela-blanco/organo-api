@@ -1,4 +1,4 @@
-package bsi.pcs.organo.util;
+package bsi.pcs.organo.model;
 
 public enum MetodoPagamento {
 	CARTAO_CREDITO("Cartao_Credito"), CARTAO_DEBITO("Cartao_debito"), PIX("Pix"), DINHEIRO("Dinheiro");

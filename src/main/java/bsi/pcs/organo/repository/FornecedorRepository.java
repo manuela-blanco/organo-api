@@ -4,13 +4,13 @@ package bsi.pcs.organo.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import bsi.pcs.organo.entity.FornecedorEntity;
+import bsi.pcs.organo.model.Fornecedor;
 
 @Repository
-public interface FornecedorRepository extends JpaRepository<FornecedorEntity, Long> {
+public interface FornecedorRepository extends JpaRepository<Fornecedor, Long> {
 
-	public FornecedorEntity getByCnpj(String cnpj);
+	public Fornecedor getByCnpj(String cnpj);
 	
-	public FornecedorEntity getByEmail(String email);
+	public Fornecedor getByEmail(String email);
 
 }

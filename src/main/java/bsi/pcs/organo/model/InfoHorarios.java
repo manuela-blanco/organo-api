@@ -1,4 +1,4 @@
-package bsi.pcs.organo.util;
+package bsi.pcs.organo.model;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import bsi.pcs.organo.entity.CompradorEntity;
+import bsi.pcs.organo.model.Comprador;
 import bsi.pcs.organo.service.CompradorService;
 
 @RestController
@@ -22,7 +22,7 @@ public class CompradorController {
 	private CompradorService compradorService;
 
 	@PostMapping("/cadastrar")
-	public ResponseEntity<?> create(@RequestBody(required = true) CompradorEntity comprador) {
+	public ResponseEntity<?> create(@RequestBody(required = true) Comprador comprador) {
 		
 		if(this.compradorService.retornar(comprador.getCpf()) != null) {
 			return ResponseEntity.badRequest().body("Comprador já está cadastrado");
@@ -34,7 +34,7 @@ public class CompradorController {
 	}
 	
 	@PutMapping("/atualizar")
-	public ResponseEntity<?> update(@RequestBody(required = true) CompradorEntity comprador) {
+	public ResponseEntity<?> update(@RequestBody(required = true) Comprador comprador) {
 		if(this.compradorService.retornar(comprador.getCpf()) == null) {
 			return ResponseEntity.badRequest().body("Comprador informado não existe");
 		}
@@ -46,15 +46,15 @@ public class CompradorController {
 	
 	@GetMapping("/{cpfComprador}")
 	public ResponseEntity<?> getComprador(@PathVariable(required = true) String cpfComprador) {
-		CompradorEntity comprador = this.compradorService.retornar(cpfComprador);
+		Comprador comprador = this.compradorService.retornar(cpfComprador);
 		if(comprador == null) return ResponseEntity.badRequest().body("CPF informado não está associado a nenhum comprador.");
 		
 		return ResponseEntity.status(HttpStatus.OK).body(comprador);
 	}
 	
 	@PostMapping("/autenticar")
-	public ResponseEntity<?> autenticar(@RequestBody(required = true) CompradorEntity comprador) {
-		CompradorEntity compradorAutenticado = this.compradorService.autenticar(comprador);
+	public ResponseEntity<?> autenticar(@RequestBody(required = true) Comprador comprador) {
+		Comprador compradorAutenticado = this.compradorService.autenticar(comprador);
 		if(compradorAutenticado != null) {
 			return ResponseEntity.status(HttpStatus.ACCEPTED).body(compradorAutenticado);
 		}

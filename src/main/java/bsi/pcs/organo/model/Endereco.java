@@ -1,4 +1,5 @@
-package bsi.pcs.organo.entity;
+package bsi.pcs.organo.model;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,14 +9,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "endereco")
-@JsonInclude(Include.NON_NULL)
-public class EnderecoEntity {
+//@JsonInclude(Include.NON_NULL)
+public class Endereco {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "endereco_id")
@@ -25,16 +24,24 @@ public class EnderecoEntity {
 	private String complemento;
 	private String cep;
 	private String bairro;
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "comprador_id")
-	private CompradorEntity comprador;
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	private Comprador comprador;
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "fornecedor_id")
-	private FornecedorEntity fornecedor;
+	private Fornecedor fornecedor;
 	
-	public EnderecoEntity() {}
+	public Endereco() {}
+	
+	public Long getId() {
+		return id;
+	}
+	
+	public void setId(Long id) {
+		this.id = id;
+	}
 	
 	public String getRua() {
 		return rua;
@@ -51,11 +58,11 @@ public class EnderecoEntity {
 	public String getComplemento() {
 		return complemento;
 	}
-	public CompradorEntity getComprador() {
+	public Comprador getComprador() {
 		return comprador;
 	}
 
-	public void setComprador(CompradorEntity comprador) {
+	public void setComprador(Comprador comprador) {
 		this.comprador = comprador;
 	}
 
@@ -75,11 +82,11 @@ public class EnderecoEntity {
 		this.bairro = bairro;
 	}
 
-	public FornecedorEntity getFornecedor() {
+	public Fornecedor getFornecedor() {
 		return fornecedor;
 	}
 
-	public void setFornecedor(FornecedorEntity fornecedor) {
+	public void setFornecedor(Fornecedor fornecedor) {
 		this.fornecedor = fornecedor;
 	}
 }

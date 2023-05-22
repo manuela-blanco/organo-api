@@ -1,4 +1,4 @@
-package bsi.pcs.organo.entity;
+package bsi.pcs.organo.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,23 +9,21 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
-
-import bsi.pcs.organo.util.InfoHorarios;
 
 @Entity
 @Table(name = "horario")
-public class HorarioEntity {
+public class Horario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "horario_id")
 	private Long id;
 	@NotNull
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "fornecedor_id")
-	private FornecedorEntity fornecedor;
+	private Fornecedor fornecedor;
 	@NotNull
 	@Column(name = "horario_selecionado")
 	private InfoHorarios horarioSelecionado;
@@ -34,10 +32,10 @@ public class HorarioEntity {
 		return id;
 	}
 
-	public FornecedorEntity getFornecedor() {
+	public Fornecedor getFornecedor() {
 		return fornecedor;
 	}
-	public void setFornecedor(FornecedorEntity fornecedor) {
+	public void setFornecedor(Fornecedor fornecedor) {
 		this.fornecedor = fornecedor;
 	}
 	public InfoHorarios getHorarioSelecionado() {

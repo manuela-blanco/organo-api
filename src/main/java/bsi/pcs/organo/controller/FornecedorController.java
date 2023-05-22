@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import bsi.pcs.organo.entity.FornecedorEntity;
+import bsi.pcs.organo.model.Fornecedor;
 import bsi.pcs.organo.service.FornecedorService;
 
 @RestController
@@ -27,7 +27,7 @@ public class FornecedorController {
 	}
 	
 	@PostMapping("/cadastrar")
-	public ResponseEntity<?> create(@RequestBody(required = true) FornecedorEntity fornecedor) {
+	public ResponseEntity<?> create(@RequestBody(required = true) Fornecedor fornecedor) {
 		
 		if(this.fornecedorService.retornar(fornecedor.getCnpj()) != null) {
 			return ResponseEntity.badRequest().body("Fornecedor já está cadastrado");
@@ -39,7 +39,7 @@ public class FornecedorController {
 	}
 	
 	@PutMapping("/atualizar")
-	public ResponseEntity<?> update(@RequestBody(required = true) FornecedorEntity fornecedor) {
+	public ResponseEntity<?> update(@RequestBody(required = true) Fornecedor fornecedor) {
 		
 		if(this.fornecedorService.retornar(fornecedor.getCnpj()) == null) {
 			return ResponseEntity.badRequest().body("Fornecedor informado não existe");
@@ -53,15 +53,15 @@ public class FornecedorController {
 	@GetMapping("/{cnpjFornecedor}")
 	public ResponseEntity<?> getFornecedor(@PathVariable(required = true) String cnpjFornecedor) {
 		
-		FornecedorEntity fornecedor = this.fornecedorService.retornar(cnpjFornecedor);
+		Fornecedor fornecedor = this.fornecedorService.retornar(cnpjFornecedor);
 		if(fornecedor == null) return ResponseEntity.badRequest().body("CNPJ informado não está associado a nenhum fornecedor.");
 		
 		return ResponseEntity.status(HttpStatus.OK).body(fornecedor);
 	}
 	
 	@PostMapping("/autenticar")
-	public ResponseEntity<?> autenticar(@RequestBody(required = true) FornecedorEntity fornecedor) {
-		FornecedorEntity fornecedorAutenticado = this.fornecedorService.autenticar(fornecedor);
+	public ResponseEntity<?> autenticar(@RequestBody(required = true) Fornecedor fornecedor) {
+		Fornecedor fornecedorAutenticado = this.fornecedorService.autenticar(fornecedor);
 		if(fornecedorAutenticado != null) {
 			return ResponseEntity.status(HttpStatus.ACCEPTED).body(fornecedorAutenticado);
 		}
@@ -81,7 +81,7 @@ public class FornecedorController {
 	
 	@GetMapping("/{cnpjFornecedor}/relatorioDeVendas")
 	public ResponseEntity<?> relatorioDeVendas(@PathVariable(required = true) String cnpjFornecedor) {
-		FornecedorEntity fornecedorEncontrado = this.fornecedorService.retornar(cnpjFornecedor);
+		Fornecedor fornecedorEncontrado = this.fornecedorService.retornar(cnpjFornecedor);
 		if(fornecedorEncontrado != null) {
 			return ResponseEntity.status(HttpStatus.OK).body(this.fornecedorService.gerarRelatorioDeVendas(fornecedorEncontrado));
 		}

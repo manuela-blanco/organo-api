@@ -1,4 +1,4 @@
-package bsi.pcs.organo.entity;
+package bsi.pcs.organo.model;
 
 import java.util.Date;
 
@@ -11,13 +11,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @Entity
 @Table(name = "produto")
 @JsonInclude(Include.NON_NULL)
-public class ProdutoEntity {
+public class Produto {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,12 +30,13 @@ public class ProdutoEntity {
 	private Date validade;
 	@Column(name = "foto_url")
 	private String fotoUrl;
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "fornecedor_id")
-	private FornecedorEntity fornecedor;
+	private Fornecedor fornecedor;
 	private boolean deleted;
 	
-	public ProdutoEntity() {}
+	public Produto() {}
 
 	public String getNome() {
 		return nome;
@@ -60,11 +62,11 @@ public class ProdutoEntity {
 		this.validade = validade;
 	}
 
-	public FornecedorEntity getFornecedor() {
+	public Fornecedor getFornecedor() {
 		return fornecedor;
 	}
 
-	public void setFornecedor(FornecedorEntity fornecedor) {
+	public void setFornecedor(Fornecedor fornecedor) {
 		this.fornecedor = fornecedor;
 	}
 	

@@ -1,4 +1,4 @@
-package bsi.pcs.organo.entity;
+package bsi.pcs.organo.model;
 
 import java.util.Date;
 import java.util.List;
@@ -15,50 +15,47 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-import bsi.pcs.organo.util.InfoEntrega;
-import bsi.pcs.organo.util.InfoHorarios;
-import bsi.pcs.organo.util.MetodoPagamento;
-import bsi.pcs.organo.util.Status;
 
 @Entity
 @Table(name = "pedido")
 @JsonInclude(Include.NON_NULL)
-public class PedidoEntity {
+public class Pedido {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "pedido_id")
 	private Long id;
 	private float valor;
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "comprador_id")
-	private CompradorEntity compradorAssociado;
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	private Comprador compradorAssociado;
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "fornecedor_id")
-	private FornecedorEntity fornecedorAssociado;
+	private Fornecedor fornecedorAssociado;
 	@JsonFormat(pattern="dd/MM/yyyy")
 	private Date dataEntrega;
 	@Column(name = "status_pedido")
 	private Status status;
 	private MetodoPagamento metodoPagamento;
+	@JsonIgnore
 	@OneToMany(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "pedido_id")
-	private List<ItemEntity> itens;
+	private List<Item> itens;
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "endereco_id")
-	private EnderecoEntity endereco;
+	private Endereco endereco;
 	@Column(name = "horario_entrega")
 	private InfoHorarios horarioEntrega;
 	@Column(name = "forma_entrega")
 	private InfoEntrega formaEntrega;
 	
-	public PedidoEntity() {}
+	public Pedido() {}
 	
 	public float getValor() {
 		return valor;
@@ -92,35 +89,35 @@ public class PedidoEntity {
 		this.metodoPagamento = metodoPagamento;
 	}
 
-	public CompradorEntity getCompradorAssociado() {
+	public Comprador getCompradorAssociado() {
 		return compradorAssociado;
 	}
 
-	public void setCompradorAssociado(CompradorEntity compradorAssociado) {
+	public void setCompradorAssociado(Comprador compradorAssociado) {
 		this.compradorAssociado = compradorAssociado;
 	}
 
-	public FornecedorEntity getFornecedorAssociado() {
+	public Fornecedor getFornecedorAssociado() {
 		return fornecedorAssociado;
 	}
 
-	public void setFornecedorAssociado(FornecedorEntity fornecedorAssociado) {
+	public void setFornecedorAssociado(Fornecedor fornecedorAssociado) {
 		this.fornecedorAssociado = fornecedorAssociado;
 	}
 
-	public List<ItemEntity> getItens() {
+	public List<Item> getItens() {
 		return itens;
 	}
 
-	public void setItens(List<ItemEntity> itens) {
+	public void setItens(List<Item> itens) {
 		this.itens = itens;
 	}
 
-	public EnderecoEntity getEndereco() {
+	public Endereco getEndereco() {
 		return endereco;
 	}
 
-	public void setEndereco(EnderecoEntity endereco) {
+	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
 	}	
 	

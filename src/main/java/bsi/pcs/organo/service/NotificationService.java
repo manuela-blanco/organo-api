@@ -47,7 +47,7 @@ public class NotificationService {
         Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
         Message message = Message.creator(
                 new PhoneNumber(toPhoneNumber),
-                new PhoneNumber("+16072988583"),
+                new PhoneNumber("+12542564076"),
                 text)
             .create();
 

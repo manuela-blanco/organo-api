@@ -1,4 +1,4 @@
-package bsi.pcs.organo.util;
+package bsi.pcs.organo.model;
 
 public class RelatorioDeVendas {
 	

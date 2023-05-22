@@ -1,4 +1,4 @@
-package bsi.pcs.organo.entity;
+package bsi.pcs.organo.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,16 +11,16 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sun.istack.NotNull;
-
-import bsi.pcs.organo.util.InfoEntrega;
 
 @Entity
 @Table(name = "fornecedor")
 @JsonInclude(Include.NON_NULL)
-public class FornecedorEntity {
+public class Fornecedor {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,17 +30,20 @@ public class FornecedorEntity {
 	@NotNull
 	private String cnpj;
 	private String email;
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private String senha;
 	@Column(name = "info_entrega")
 	private InfoEntrega infoEntrega;
 	@Column(name = "telefone_movel")
 	private String telefoneMovel;
+	@JsonIgnore
 	@OneToMany(mappedBy = "fornecedor")
-	private List<HorarioEntity> horarios;
+	private List<Horario> horarios;
+	@JsonIgnore
 	@OneToMany(mappedBy = "fornecedor")
-	private List<EnderecoEntity> enderecos;
+	private List<Endereco> enderecos;
 
-	public FornecedorEntity() {}
+	public Fornecedor() {}
 
 	public String getNomeFantasia() {
 		return nomeFantasia;
@@ -94,28 +97,29 @@ public class FornecedorEntity {
 		this.telefoneMovel = telefoneMovel;
 	}
 	
-	public List<HorarioEntity> getHorarios() {
+	public List<Horario> getHorarios() {
 		return horarios;
 	}
 	
+	@JsonIgnore
 	public List<String> getHorariosValores() {
 		List<String> h = new ArrayList<>();
-		for(HorarioEntity he : horarios) {
+		for(Horario he : horarios) {
 			h.add(he.getHorarioSelecionado().getInfoHorarios());
 		}
 		
 		return h;
 	}
 
-	public List<EnderecoEntity> getEnderecos() {
+	public List<Endereco> getEnderecos() {
 		return enderecos;
 	}
 
-	public void setEnderecos(List<EnderecoEntity> enderecos) {
+	public void setEnderecos(List<Endereco> enderecos) {
 		this.enderecos = enderecos;
 	}
 
-	public void setHorarios(List<HorarioEntity> horarios) {
+	public void setHorarios(List<Horario> horarios) {
 		this.horarios = horarios;
 	}
 	

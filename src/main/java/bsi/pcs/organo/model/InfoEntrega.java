@@ -1,4 +1,4 @@
-package bsi.pcs.organo.util;
+package bsi.pcs.organo.model;
 
 public enum InfoEntrega {
 	ENTREGA("Entrega"), RETIRADA("Retirada"), ENTREGA_E_RETIRADA("Entrega_e_retirada");

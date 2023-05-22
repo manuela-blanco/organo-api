@@ -1,15 +1,17 @@
-package bsi.pcs.organo.entity;
+package bsi.pcs.organo.model;
 
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.sun.istack.NotNull;
@@ -17,7 +19,7 @@ import com.sun.istack.NotNull;
 @Entity
 @Table(name = "comprador")
 @JsonInclude(Include.NON_NULL)
-public class CompradorEntity {
+public class Comprador {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,13 +31,12 @@ public class CompradorEntity {
 	private String sobrenome;
 	@NotNull
 	private String cpf;
-	@OneToMany(mappedBy = "comprador")
-	private List<EnderecoEntity> enderecos;
+	@JsonIgnore
+	@OneToMany(mappedBy = "comprador", fetch = FetchType.EAGER)
+	private List<Endereco> enderecos;
 	private String celular;
-	@OneToMany(mappedBy = "compradorAssociado")
-	private List<PedidoEntity> pedidos;
 	
-	public CompradorEntity() {}
+	public Comprador() {}
 	
 	public String getNome() {
 		return nome;
@@ -76,20 +77,12 @@ public class CompradorEntity {
 		this.senha = senha;
 	}
 
-	public List<EnderecoEntity> getEnderecos() {
+	public List<Endereco> getEnderecos() {
 		return enderecos;
 	}
 
-	public void setEnderecos(List<EnderecoEntity> enderecos) {
+	public void setEnderecos(List<Endereco> enderecos) {
 		this.enderecos = enderecos;
-	}
-
-	public List<PedidoEntity> getPedidos() {
-		return pedidos;
-	}
-
-	public void setPedidos(List<PedidoEntity> pedidos) {
-		this.pedidos = pedidos;
 	}
 	
 	public Long getId() {
@@ -104,10 +97,4 @@ public class CompradorEntity {
 	public void setCelular(String celular) {
 		this.celular = celular;
 	}
-
-	
-	public void addPedido(PedidoEntity pedido) {
-		this.pedidos.add(pedido);
-	}
-			
 }
