@@ -1,5 +1,6 @@
 package bsi.pcs.organo.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -11,27 +12,28 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.sun.istack.NotNull;
 
 @Entity
 @Table(name = "comprador")
 @JsonInclude(Include.NON_NULL)
-public class Comprador {
+public class Comprador implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "comprador_id")
 	private Long id;
 	private String email;
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private String senha;
 	private String nome;
 	private String sobrenome;
 	@NotNull
 	private String cpf;
-	@JsonIgnore
+//	@JsonIgnore
 	@OneToMany(mappedBy = "comprador", fetch = FetchType.EAGER)
 	private List<Endereco> enderecos;
 	private String celular;
@@ -88,8 +90,7 @@ public class Comprador {
 	public Long getId() {
 		return id;
 	}
-	
-	
+
 	public String getCelular() {
 		return celular;
 	}

@@ -1,5 +1,7 @@
 package bsi.pcs.organo.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,7 +16,7 @@ import com.sun.istack.NotNull;
 
 @Entity
 @Table(name = "horario")
-public class Horario {
+public class Horario implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "horario_id")

@@ -1,5 +1,6 @@
 package bsi.pcs.organo.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +12,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -20,7 +24,7 @@ import com.sun.istack.NotNull;
 @Entity
 @Table(name = "fornecedor")
 @JsonInclude(Include.NON_NULL)
-public class Fornecedor {
+public class Fornecedor implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,10 +40,12 @@ public class Fornecedor {
 	private InfoEntrega infoEntrega;
 	@Column(name = "telefone_movel")
 	private String telefoneMovel;
-	@JsonIgnore
+//	@JsonIgnore
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy = "fornecedor")
 	private List<Horario> horarios;
-	@JsonIgnore
+//	@JsonIgnore
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy = "fornecedor")
 	private List<Endereco> enderecos;
 
