@@ -34,7 +34,7 @@ public class Produto implements Serializable {
 	private Date validade;
 	@Column(name = "foto_url")
 	private String fotoUrl;
-	@LazyCollection(LazyCollectionOption.FALSE)
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "fornecedor_id")
 	private Fornecedor fornecedor;

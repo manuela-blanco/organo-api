@@ -33,11 +33,11 @@ public class Pedido implements Serializable {
 	@Column(name = "pedido_id")
 	private Long id;
 	private float valor;
-	@LazyCollection(LazyCollectionOption.FALSE)
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "comprador_id")
 	private Comprador compradorAssociado;
-	@LazyCollection(LazyCollectionOption.FALSE)
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "fornecedor_id")
 	private Fornecedor fornecedorAssociado;
@@ -47,10 +47,8 @@ public class Pedido implements Serializable {
 	private Status status;
 	private MetodoPagamento metodoPagamento;
 	@LazyCollection(LazyCollectionOption.FALSE)
-	@OneToMany(cascade = CascadeType.PERSIST)
-	@JoinColumn(name = "pedido_id")
+	@OneToMany(cascade = CascadeType.PERSIST, mappedBy = "pedido")
 	private List<Item> itens;
-	@LazyCollection(LazyCollectionOption.FALSE)
 	@ManyToOne
 	@JoinColumn(name = "endereco_id")
 	private Endereco endereco;

@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -53,6 +54,7 @@ public class PedidoService {
 	}
 
 	@CachePut(value = "pedido", key = "#pedidoId")
+	@CacheEvict("fornecedorPedidos")
 	public Pedido atualizarStatus(Long pedidoId, String status) {
 		Optional<Pedido> pedidoEncontrado = this.pedidoRepository.findById(pedidoId);
 		Status stat = Status.valueOf(status);
@@ -65,6 +67,7 @@ public class PedidoService {
 		return this.pedidoRepository.findByDataEntregaAndFornecedorCnpj(dataEntrega, fornecedorCnpj);
 	}
 
+	@CacheEvict("fornecedorPedidos")
 	public void registrar(Pedido pedido, String compradorCpf, String fornecedorCnpj) throws IOException {
 		Comprador compradorEncontrado = this.compradorRepository.findByCpf(compradorCpf);
 		Fornecedor fornecedorEncontrado = this.fornecedorRepository.getByCnpj(fornecedorCnpj);

@@ -1,5 +1,7 @@
 package bsi.pcs.organo.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @Entity
 @Table(name = "item")
 @JsonInclude(Include.NON_NULL)
-public class Item {
+public class Item implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,7 +32,7 @@ public class Item {
 	@JoinColumn(name = "produto_id")
 	private Produto produto;
 	private int quantidade;
-	@LazyCollection(LazyCollectionOption.FALSE)
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "pedido_id")
 	private Pedido pedido;
