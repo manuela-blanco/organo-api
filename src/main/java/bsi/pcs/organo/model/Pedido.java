@@ -1,5 +1,6 @@
 package bsi.pcs.organo.model;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -14,6 +15,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -22,18 +26,18 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @Entity
 @Table(name = "pedido")
 @JsonInclude(Include.NON_NULL)
-public class Pedido {
+public class Pedido implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "pedido_id")
 	private Long id;
 	private float valor;
-	@JsonIgnore
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@ManyToOne
 	@JoinColumn(name = "comprador_id")
 	private Comprador compradorAssociado;
-	@JsonIgnore
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@ManyToOne
 	@JoinColumn(name = "fornecedor_id")
 	private Fornecedor fornecedorAssociado;
@@ -42,11 +46,11 @@ public class Pedido {
 	@Column(name = "status_pedido")
 	private Status status;
 	private MetodoPagamento metodoPagamento;
-	@JsonIgnore
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "pedido_id")
 	private List<Item> itens;
-	@JsonIgnore
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@ManyToOne
 	@JoinColumn(name = "endereco_id")
 	private Endereco endereco;

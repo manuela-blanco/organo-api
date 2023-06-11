@@ -9,6 +9,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -22,12 +25,12 @@ public class Item {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "item_id")
 	private Long id;
-	@JsonIgnore
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@ManyToOne
 	@JoinColumn(name = "produto_id")
 	private Produto produto;
 	private int quantidade;
-	@JsonIgnore
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@ManyToOne
 	@JoinColumn(name = "pedido_id")
 	private Pedido pedido;

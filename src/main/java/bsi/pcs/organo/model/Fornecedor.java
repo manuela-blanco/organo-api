@@ -40,11 +40,9 @@ public class Fornecedor implements Serializable {
 	private InfoEntrega infoEntrega;
 	@Column(name = "telefone_movel")
 	private String telefoneMovel;
-//	@JsonIgnore
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy = "fornecedor")
 	private List<Horario> horarios;
-//	@JsonIgnore
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy = "fornecedor")
 	private List<Endereco> enderecos;

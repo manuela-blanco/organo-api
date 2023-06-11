@@ -12,6 +12,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -33,7 +36,7 @@ public class Comprador implements Serializable {
 	private String sobrenome;
 	@NotNull
 	private String cpf;
-//	@JsonIgnore
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy = "comprador", fetch = FetchType.EAGER)
 	private List<Endereco> enderecos;
 	private String celular;

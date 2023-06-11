@@ -1,5 +1,6 @@
 package bsi.pcs.organo.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -11,6 +12,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -18,7 +22,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @Entity
 @Table(name = "produto")
 @JsonInclude(Include.NON_NULL)
-public class Produto {
+public class Produto implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,7 +34,7 @@ public class Produto {
 	private Date validade;
 	@Column(name = "foto_url")
 	private String fotoUrl;
-	@JsonIgnore
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@ManyToOne
 	@JoinColumn(name = "fornecedor_id")
 	private Fornecedor fornecedor;
