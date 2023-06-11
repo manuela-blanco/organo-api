@@ -37,7 +37,7 @@ public class Comprador implements Serializable {
 	@NotNull
 	private String cpf;
 	@LazyCollection(LazyCollectionOption.FALSE)
-	@OneToMany(mappedBy = "comprador", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "comprador")
 	private List<Endereco> enderecos;
 	private String celular;
 	
